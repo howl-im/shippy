@@ -1,0 +1,38 @@
+// vessel-service/proto/vessel/vessel.proto
+syntax = "proto3";
+
+package go.micro.srv.vessel;
+
+service VesselService {
+	// 检查是否有能运送货物的轮船
+	rpc FindAvailable (Specification) returns (Response) {
+	}
+
+	// 创建货轮
+	rpc Create (Vessel) returns (Response) {
+	}
+}
+
+// 每艘货轮的数据
+message Vessel {
+	string Id        = 1; //编号
+	int32 Capacity   = 2; //最大容量（船体容量即是集装箱的个数）
+	int32 MaxWeight  = 3; //最大载量
+	string Name      = 4; //名字
+	bool Available   = 5; //是否可用
+	string OwerId    = 6; //归属
+}
+
+// 等待运送的货物
+message Specification {
+	int32 Capacity   = 1; //容量（内部集装箱的个数）
+	int32 MaxWeight  = 2; //重量
+}
+
+// 装得下的话
+// 返回多艘货轮信息
+message Response {
+	Vessel Vessel            = 1; //
+	repeated Vessel Vessels  = 2;
+	bool Created             = 3;
+}

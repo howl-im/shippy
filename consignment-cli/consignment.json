@@ -1,0 +1,23 @@
+{
+	"Description": "This is a test consignment",
+	"Weight": 55000,
+	"Containers": [
+		{
+			"CustomerId": "cust001",
+			"UserId": "user001",
+			"Origin": "Machchester, Shenzhen, China"
+		},
+		{
+			"CustomerId": "cust002",
+			"UserId": "user002",
+			"Origin": "Derby, Shenzhen, China"
+		},
+		{
+			"CustomerId": "cust003",
+			"UserId": "user003",
+			"Origin": "Sheffield, Shenzhen, China"
+		}
+
+	],
+	"VesselId": "vessel001"
+}
