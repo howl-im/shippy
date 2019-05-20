@@ -1,6 +1,6 @@
 package main
 import (
-	pb "shippy/user-service/proto/user"
+	pb "github.com/howl-io/shippy/user-service/proto/user"
 	"github.com/micro/go-micro"
 	microclient "github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/cmd"

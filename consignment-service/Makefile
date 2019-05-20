@@ -6,7 +6,7 @@ build:
 # protoc -I. --go_out=plugins=grpc:$(GOPATH)/src/shippy/consignment-service proto/consignment/consignment.proto
 
 # for go-micro
-	protoc -I. --go_out=plugins=micro:$(GOPATH)/src/shippy/consignment-service proto/consignment/consignment.proto
+	protoc -I. --go_out=plugins=micro:$(GOPATH)/src/github.com/howl-io/shippy/consignment-service proto/consignment/consignment.proto
 
 # 编译 consignment-service CGO_ENABLED=0
 	GOOS=linux GOARCH=amd64 go build

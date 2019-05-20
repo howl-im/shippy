@@ -1,7 +1,7 @@
 package main
 
 import (
-	pb "shippy/vessel-service/proto/vessel"
+	pb "github.com/howl-io/shippy/vessel-service/proto/vessel"
 	"context"
 	"gopkg.in/mgo.v2"
 	"log"

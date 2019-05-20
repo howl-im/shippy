@@ -2,7 +2,7 @@ package main
 
 import (
 	//导入自动生成的proto包，并改名为pb
-	pb "shippy/consignment-service/proto/consignment"
+	pb "github.com/howl-io/shippy/consignment-service/proto/consignment"
 	"log"
 	"gopkg.in/mgo.v2"
 )

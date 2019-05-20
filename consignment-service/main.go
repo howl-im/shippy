@@ -2,8 +2,8 @@ package main
 
 import (
 	//导入自动生成的proto包，并改名为pb
-	pb "shippy/consignment-service/proto/consignment"
-	vesselPb "shippy/vessel-service/proto/vessel"
+	pb "github.com/howl-io/shippy/consignment-service/proto/consignment"
+	vesselPb "github.com/howl-io/shippy/vessel-service/proto/vessel"
 	"log"
 	"os"
 	// for grpc

@@ -3,7 +3,7 @@ all: build run
 build:
 	@echo "Building~~~~~~~~~~~~~~~~"
 
-	protoc -I . --go_out=plugins=micro:$(GOPATH)/src/shippy/user-service proto/user/user.proto
+	protoc -I . --go_out=plugins=micro:$(GOPATH)/src/github.com/howl-io/shippy/user-service proto/user/user.proto
 
 	GOOS=linux GOARCH=amd64 go build
 
