@@ -88,14 +88,16 @@ func (h *handler) Auth(ctx context.Context, req *pb.User, resp *pb.Token) error 
 }
 
 func (h *handler) ValidateToken(ctx context.Context, req *pb.Token, resp *pb.Token) error {
-	log.Printf("calling ValidateToken\n")
+	log.Printf("calling ValidateToken, req.Taken: %v\n", req.Token)
 	// Decode token
 	claims, err := h.tokenService.Decode(req.Token)
 	if err != nil {
+		log.Printf("decode failed: %v\n", err)
 		return err
 	}
 
 	if claims.User.Id == "" {
+		log.Printf("user id is nil\n")
 		return errors.New("invalid user")
 	}
 

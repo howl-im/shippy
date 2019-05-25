@@ -7,6 +7,7 @@ import (
 	//"google.golang.org/grpc"
 	microclient "github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/cmd"
+	"github.com/micro/go-micro/metadata"
 
 	"log"
 	"os"
@@ -53,12 +54,16 @@ func main() {
 
 	// 在命令行中指定新的货物信息 json 文件
 	infoFile := DEFAULT_INFO_FILE
-	if len(os.Args) < 3 {
+	
+	if len(os.Args) < 1 {
 		log.Fatalln("Not enough arguments, expecting file and token.")
 	}
 
-	infoFile = os.Args[1]
-	token := os.Args[2]
+	token := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyIjp7IklkIjoiZGI1MTIzZDQtYjg4Ny00MTFhLWE1ZDgtYWRlMmUwMTExNzc2IiwiTmFtZSI6IkV3YW4gVmFsZW50aW1lIiwiQ29tcGFueSI6IkJCQyIsIkVtYWlsIjoiZXdhbi52YWxlbnRpbmU4OUBnbWFpbC5jb20iLCJQYXNzd29yZCI6IiQyYSQxMCROc3FFQ28zbXprVmxsRGFENjMwVmN1dXV6OTZGenNKOUcxU1JTdzdvNHkvakRRWDRhdXZJVyJ9LCJleHAiOjE1NTkwMjcyMzMsImlzcyI6ImdvLm1pY3JvLnNydi51c2VyIn0.A16BCPByhk1qkUkSYDPJ1kBXmtV-G6ydJjs6M7ByaFE"
+	//infoFile = os.Args[1]
+	//token := os.Args[1]
+	//log.Printf("Args[1]: %v\n", os.Args[1])
+	//log.Printf("Args[2]: %v\n", os.Args[2])
 
 	// 解析货物信息
 	consignment, err := parseFile(infoFile)
@@ -85,7 +90,7 @@ func main() {
 	log.Printf("Response: %+v\n", resp)	
 
 	// 列出目前所有托运的货物
-	resp, err = client.GetConsignments(context.Background(), &pb.GetRequest{})
+	resp, err = client.GetConsignments(tokenContext, &pb.GetRequest{})
 	if err != nil {
 		log.Fatalf("failed to list consignments: %v", err)
 	}

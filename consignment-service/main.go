@@ -78,14 +78,22 @@ func main() {
 // 认证通过则 fn() 继续执行，否则报错
 func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 	return func(ctx context.Context, req server.Request, resp interface{}) error {
+
+		// consignment-service 独立运行时不进行认证
+		if os.Getenv("DISABLE_AUTH") == "true" {
+			return fn(ctx, req, resp)
+		}
+
+
 		meta, ok := metadata.FromContext(ctx)
 		if !ok {
 			return errors.New("no auth meta-data found in reques")
 		}
 
 		// Note this is now uppercase (not entirely sure why this is...)
-		log.Printf("metadata: %v", meta)
+		log.Printf("metadata: %v\n", meta)
 		token := meta["Token"]
+		log.Printf("token: %v\n", token)
 
 		// Auth here
 		authClient := userPb.NewUserServiceClient("go.micro.srv.user", client.DefaultClient)
