@@ -53,9 +53,12 @@ func main() {
 
 	// 在命令行中指定新的货物信息 json 文件
 	infoFile := DEFAULT_INFO_FILE
-	if len(os.Args) > 1 {
-		infoFile = os.Args[1]
+	if len(os.Args) < 3 {
+		log.Fatalln("Not enough arguments, expecting file and token.")
 	}
+
+	infoFile = os.Args[1]
+	token := os.Args[2]
 
 	// 解析货物信息
 	consignment, err := parseFile(infoFile)
@@ -63,9 +66,15 @@ func main() {
 		log.Fatalf("parae info file error: %v", err)
 	}
 
+	// 创建带有用户 token 的context
+	// consignment-service 服务端将从中取出 token， 解密取出用户身份
+	tokenContext := metadata.NewContext(context.Background(), map[string]string {
+		"Token": token,
+	})
+
 	// 调用 RPC
 	// 将货物存储到仓库中
-	resp, err := client.CreateConsignment(context.Background(), consignment)
+	resp, err := client.CreateConsignment(tokenContext, consignment)
 	if err != nil {
 		log.Fatalf("create consignment error: %v", err)
 	}

@@ -26,7 +26,9 @@ func main() {
 
 	server.Init()
 
-	pb.RegisterUserServiceHandler(server.Server(), &handler{repo})
+	token := &TokenService{repo}
+
+	pb.RegisterUserServiceHandler(server.Server(), &handler{repo, token})
 
 	if err := server.Run(); err != nil {
 		log.Fatalf("failed to serve: %v", err)

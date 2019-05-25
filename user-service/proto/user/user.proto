@@ -42,8 +42,8 @@ message Response {
 
 message Token {
 	string Token  = 1;
-	bool valid    = 2;
-	Error errors  = 3;
+	bool Valid    = 2;
+	Error Errors  = 3;
 }
 
 message Error {
