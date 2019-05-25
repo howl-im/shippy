@@ -6,6 +6,13 @@ import (
 	"context"
 	"golang.org/x/crypto/bcrypt"
 	"errors"
+	//_ "github.com/micro/go-micro/go-plugins/broker/nats"
+	"github.com/micro/go-micro"
+
+)
+
+const (
+	TOPIC = "user.created"
 )
 
 
@@ -13,6 +20,8 @@ import (
 type handler struct {
 	repo IRepository
 	tokenService IAuthable
+	//PubSub broker.Broker
+	Publisher micro.Publisher
 }
 
 
@@ -32,8 +41,41 @@ func (h *handler) Create(ctx context.Context, req *pb.User, resp *pb.Response) e
 
 	log.Printf("after handler req: %v\n", req)
 	resp.User = req
+
+
+	// 发布带有用户所有信息的消息
+//	if err := h.publishEvent(req); err != nil {
+//		return err
+//	}
+
+	if err := h.Publisher.Publish(ctx, req); err != nil {
+		return err
+	}
+
 	return nil
 }
+
+// 发送消息通知
+//func (h *handler) publishEvent(user *pb.User) error {
+//	body, err := json.Marshal(user)
+//	if err != nil {
+//		return err
+//	}
+//
+//	msg := &broker.Message {
+//		Header: map[string]string {
+//			"id": user.Id,
+//		},
+//		Body: body,
+//	}
+//
+//	if err := h.PubSub.Publish(TOPIC, msg); err != nil {
+//		log.Fatalf("[pub] failed: %v\n", err
+//	}
+//
+//	return nil
+//}
+
 
 func (h *handler) Get(ctx context.Context, req *pb.User, resp *pb.Response) error {
 	user, err := h.repo.Get(req.Id)
